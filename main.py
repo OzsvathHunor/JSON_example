@@ -1,7 +1,13 @@
 #!/usr/bin/env python
+#-*- coding: utf-8-*-
+
+
 import os
 import jinja2
 import webapp2
+import json
+from google.appengine.api import urlfetch
+
 
 
 template_dir = os.path.join(os.path.dirname(__file__), "templates")
@@ -29,8 +35,27 @@ class BaseHandler(webapp2.RequestHandler):
 
 class MainHandler(BaseHandler):
     def get(self):
-        return self.render_template("hello.html")
+        data = open("people.json", "r").read()
+        json_data = json.loads(data)
+
+        params = {"people_list": json_data}
+
+        self.render_template("hello.html", params)
+
+
+class GameHandler(BaseHandler):
+    def get(self):
+        url = "https://age-of-empires-2-api.herokuapp.com/api/v1/civilizations"
+        result = urlfetch.fetch(url)
+
+        json_data = json.loads(result.content)
+
+        params = {"civilizations_data": json_data}
+
+        self.render_template("game.html", params)
+
 
 app = webapp2.WSGIApplication([
     webapp2.Route('/', MainHandler),
+    webapp2.Route('/ageofempires', GameHandler),
 ], debug=True)

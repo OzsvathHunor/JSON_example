@@ -8,5 +8,9 @@
 </head>
 <body>
     <h1>Hello, SmartNinja!</h1>
+
+    {% for person in people_list %}
+        <p>{{ person.first_name }} {{ person.last_name }}, {{ person.SSN }}</p>
+    {% endfor %}
 </body>
 </html>

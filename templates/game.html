@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Age of Empires Civilisations</title>
+</head>
+<body>
+    <h1>Age of Empires Civilisations!</h1>
+
+    {% for civilization in civilizations_data.civilizations %}
+        <p>{{ civilization.name }} - {{ civilization.army_type }}</p>
+        <ul>
+            {% for bonus in civilization.civilization_bonus %}
+            <li>{{ bonus }}</li>
+            {% endfor %}
+        </ul>
+    {% endfor %}
+</body>
+</html>
